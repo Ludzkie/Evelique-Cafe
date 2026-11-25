@@ -1,0 +1,163 @@
+/* Basic Reset and Page Font */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf8f5;
+    color: #333333;
+    line-height: 1.6;
+}
+
+/* Header & Navigation */
+header {
+    background-color: #4a3525;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: Georgia, serif;
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+
+nav {
+    margin-top: 15px;
+}
+
+nav a {
+    color: #f3e5d8;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #d4a373;
+    text-decoration: underline;
+}
+
+/* Main Content Container */
+.container {
+    width: 85%;
+    max-width: 900px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 25px;
+    border: 1px solid #e6d5c3;
+    border-radius: 8px;
+}
+
+h2 {
+    font-family: Georgia, serif;
+    color: #4a3525;
+    border-bottom: 2px solid #d4a373;
+    padding-bottom: 5px;
+}
+
+/* Hero Banner on Home Page */
+.hero {
+    background-color: #f3e5d8;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.hero h2 {
+    border: none;
+    font-size: 28px;
+    margin-top: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #4a3525;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn:hover {
+    background-color: #6f4e37;
+}
+
+/* Simple Flexbox for Featured Cards */
+.card-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #fdf8f5;
+    border: 1px solid #e6d5c3;
+    border-radius: 6px;
+    padding: 15px;
+    width: 30%;
+    text-align: center;
+}
+
+.card h3 {
+    color: #4a3525;
+    margin-top: 0;
+}
+
+/* Menu Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+th, td {
+    border: 1px solid #e6d5c3;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4a3525;
+    color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #fdf8f5;
+}
+
+/* Contact Form */
+form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    color: #4a3525;
+}
+
+form input, form textarea {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+}
+
+/* Footer */
+footer {
+    background-color: #4a3525;
+    color: #f3e5d8;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+    font-size: 14px;
+}
