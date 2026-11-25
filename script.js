@@ -27,7 +27,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const statusMsg = document.getElementById("status-msg");
     const submitBtn = document.getElementById("submitBtn");
 
-    const WEBHOOK_URL = "https://discord.com";
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1575195278804259029/v82ligsbPnF8_v6LZrf96iHoUCZIbgRMXrsx_StsS-Dj1GDKsIbpR9iD5ENdzx_Ak-HQ";
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
