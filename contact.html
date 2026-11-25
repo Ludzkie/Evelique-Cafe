@@ -2,22 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evélique Cafe - Visit & Contact</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="scenic-bg">
+        <div class="stars"></div>
+        <div class="celestial-orb"></div>
+        <div class="sleigh-container">
+            <svg viewBox="0 0 200 70" fill="currentColor">
+                <circle cx="165" cy="35" r="5"/>
+                <path d="M160 38 L150 48 L145 60 M155 48 L158 60 M165 30 L170 22 M167 30 L163 22" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <circle cx="132" cy="37" r="5"/>
+                <path d="M127 40 L117 50 L112 62 M122 50 L125 62 M132 32 L137 24" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <path d="M85 45 Q120 42 162 36" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M25 45 L85 45 L80 58 L30 58 Z"/>
+                <path d="M20 62 L90 62 Q98 62 96 54" stroke="currentColor" stroke-width="3" fill="none"/>
+                <circle cx="52" cy="34" r="7"/>
+                <path d="M40 45 C40 37, 64 37, 64 45 Z"/>
+            </svg>
+        </div>
+        <svg class="mountains-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <polygon class="mountain-back" points="0,320 260,90 540,320"/>
+            <polygon class="snow-cap" points="260,90 215,130 245,125 260,140 280,122 305,130"/>
+            <polygon class="mountain-back" points="420,320 760,60 1120,320"/>
+            <polygon class="snow-cap" points="760,60 700,112 735,105 760,125 790,104 820,112"/>
+            <polygon class="mountain-back" points="950,320 1240,100 1440,260 1440,320"/>
+            <polygon class="snow-cap" points="1240,100 1195,135 1225,130 1240,145 1265,128 1285,135"/>
+            <polygon class="mountain-front" points="-50,320 180,150 430,320"/>
+            <polygon class="mountain-front" points="320,320 620,140 940,320"/>
+            <polygon class="mountain-front" points="820,320 1140,155 1490,320"/>
+        </svg>
+    </div>
+
     <div class="holiday-banner">
-        Season's Greetings! Enjoy 10% OFF on Holiday Drinks from Dec 20 – Jan 1!
+        🎄 OPEN EVERY DAY! Drop by for your daily caffeine fix & cozy study vibes.
     </div>
 
     <header>
         <h1>Evélique Cafe</h1>
+        <span class="tagline">Artisanal Coffee • Fresh Bakes • Mandaue City</span>
         <nav>
             <a href="index.html">Home</a>
-            <a href="menu.html">Menu</a>
+            <a href="menu.html">Menu (3 Sizes)</a>
             <a href="contact.html">Visit & Contact</a>
         </nav>
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
     <div class="container">
@@ -26,12 +58,11 @@
         <p><strong>Phone:</strong> (+63) 967 676 6767</p>
         <p><strong>Email:</strong> ludzkieog@gmail.com</p>
 
-        <h3>Holiday Store Hours</h3>
+        <h3>Store Hours (Open Daily)</h3>
         <ul>
-            <li><strong>Dec 20 – Dec 23:</strong> 8:00 AM – 11:00 PM</li>
-            <li><strong>Dec 24 (Christmas Eve):</strong> 8:00 AM – 6:00 PM</li>
-            <li><strong>Dec 25 (Christmas Day):</strong> 1:00 PM – 10:00 PM</li>
-            <li><strong>Dec 26 – Jan 1:</strong> 9:00 AM – 11:00 PM</li>
+            <li><strong>Monday – Thursday:</strong> 8:00 AM – 10:00 PM</li>
+            <li><strong>Friday – Saturday:</strong> 8:00 AM – 12:00 Midnight</li>
+            <li><strong>Sunday:</strong> 9:00 AM – 10:00 PM</li>
         </ul>
 
         <h2>Send Us a Message or Reserve a Table</h2>
@@ -43,7 +74,7 @@
             <input type="email" id="email" placeholder="johndoe@gmail.com" required>
 
             <label for="message">Message or Reservation Details:</label>
-            <textarea id="message" rows="4" placeholder="Table for 2 on Dec 25 at 4:00 PM..." required></textarea>
+            <textarea id="message" rows="4" placeholder="Table for 2 at 4:00 PM + 2 Grande Spanish Lattes..." required></textarea>
 
             <button type="submit" class="btn" id="submitBtn">Send Message</button>
         </form>
@@ -52,67 +83,9 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Evélique Cafe | A.S. Fortuna St., Mandaue City | Happy Holidays!</p>
+        <p>&copy; 2026 Evélique Cafe | A.S. Fortuna St., Mandaue City, Cebu</p>
     </footer>
 
-    <script>
-        const form = document.getElementById("contactForm");
-        const statusMsg = document.getElementById("status-msg");
-        const submitBtn = document.getElementById("submitBtn");
-
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1575195278804259029/v82ligsbPnF8_v6LZrf96iHoUCZIbgRMXrsx_StsS-Dj1GDKsIbpR9iD5ENdzx_Ak-HQ";
-
-        form.addEventListener("submit", async function(event) {
-            event.preventDefault(); // Stops page from reloading
-
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Sending...";
-
-            const payload = {
-                username: "Evélique Cafe Bot",
-                embeds: [{
-                    title: "🎄 New Cafe Inquiry / Reservation",
-                    color: 10166822, // Cranberry Red
-                    fields: [
-                        { name: "Name", value: name, inline: true },
-                        { name: "Email", value: email, inline: true },
-                        { name: "Message", value: message }
-                    ],
-                    footer: { text: "Evélique Cafe Website" }
-                }]
-            };
-
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    statusMsg.style.display = "block";
-                    statusMsg.style.backgroundColor = "#d8f3dc";
-                    statusMsg.style.color = "#1b4332";
-                    statusMsg.textContent = "Thank you! Your message has been sent to Evélique Cafe.";
-                    form.reset();
-                } else {
-                    throw new Error("Webhook failed");
-                }
-            } catch (error) {
-                statusMsg.style.display = "block";
-                statusMsg.style.backgroundColor = "#f8d7da";
-                statusMsg.style.color = "#842029";
-                statusMsg.textContent = "Oops! Could not send message. Check your webhook URL.";
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Send Message";
-            }
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
