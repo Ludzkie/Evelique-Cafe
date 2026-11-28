@@ -1,7 +1,16 @@
 // 1. DARK / LIGHT THEME TOGGLE
+let themeTransitionTimer = null;
+
 function toggleTheme() {
     const body = document.body;
     const btn = document.getElementById("themeBtn");
+
+    body.classList.add("theme-transitioning");
+    clearTimeout(themeTransitionTimer);
+    themeTransitionTimer = setTimeout(() => {
+        body.classList.remove("theme-transitioning");
+    }, 780);
+
     body.classList.toggle("dark-mode");
 
     if (body.classList.contains("dark-mode")) {
