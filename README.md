@@ -2,7 +2,7 @@
 
 A cozy, Christmas-themed digital cafe menu created as a school project by **John Ludovic Cabahug** (Grade 9 – Citrine).
 
-🔗 **[View Live Site on Vercel](https://vercel.app)** *(Replace with your actual Vercel URL)*
+🔗 **[View Live Site on Vercel](https://evelique.vercel.app)**
 
 ---
 
