@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evélique Cafe - Full Menu</title>
+    <title>Evélique Cafe — Full Menu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Scenic Background -->
     <div class="scenic-bg">
         <div class="stars"></div>
         <div class="celestial-orb"></div>
@@ -47,192 +46,287 @@
         <span class="tagline">Artisanal Coffee • Fresh Bakes • Mandaue City</span>
         <nav>
             <a href="index.html">Home</a>
-            <a href="menu.html">Menu (3 Sizes)</a>
+            <a href="menu.html" class="active">Menu (3 Sizes)</a>
             <a href="contact.html">Visit & Contact</a>
         </nav>
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
     <div class="container">
-        <div class="size-guide">
-            <div><span>Tall:</span> 12 oz (Regular)</div>
-            <div>•</div>
-            <div><span>Grande:</span> 16 oz (Most Popular)</div>
-            <div>•</div>
-            <div><span>Venti:</span> 20 oz (Best Value)</div>
+        <div class="menu-toolbar">
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterMenu('all', this)">All Items</button>
+                <button class="filter-btn" onclick="filterMenu('holiday', this)">🎄 Holiday</button>
+                <button class="filter-btn" onclick="filterMenu('coffee', this)">☕ Coffee</button>
+                <button class="filter-btn" onclick="filterMenu('non-coffee', this)">🍵 Non-Coffee</button>
+                <button class="filter-btn" onclick="filterMenu('food', this)">🥐 Pastries & Food</button>
+            </div>
+
+            <div class="size-guide">
+                <div><span>Tall:</span> 12oz</div>
+                <div>•</div>
+                <div><span>Grande:</span> 16oz</div>
+                <div>•</div>
+                <div><span>Venti:</span> 20oz</div>
+            </div>
         </div>
 
-        <h2>🎄 Holiday Limited Edition Drinks</h2>
-        <table>
-            <tr>
-                <th>Drink</th>
-                <th class="size-col">Tall<br><small>(12oz)</small></th>
-                <th class="size-col">Grande<br><small>(16oz)</small></th>
-                <th class="size-col">Venti<br><small>(20oz)</small></th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Peppermint Mocha <span class="hot-tag">BESTSELLER</span></span>
-                    <span class="item-desc">Belgian dark cocoa, espresso, peppermint syrup & crushed candy cane</span>
-                </td>
-                <td class="size-col">₱150</td>
-                <td class="size-col">₱165</td>
-                <td class="size-col">₱180</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Gingerbread Spiced Latte</span>
-                    <span class="item-desc">Velvety milk with espresso, cinnamon, nutmeg & brown sugar glaze</span>
-                </td>
-                <td class="size-col">₱145</td>
-                <td class="size-col">₱160</td>
-                <td class="size-col">₱175</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Toasted Marshmallow Cocoa</span>
-                    <span class="item-desc">Rich Cebuano tablea hot chocolate topped with torched fluff</span>
-                </td>
-                <td class="size-col">₱140</td>
-                <td class="size-col">₱155</td>
-                <td class="size-col">₱170</td>
-            </tr>
-        </table>
+        <section class="menu-section" data-category="holiday">
+            <h2>🎄 Holiday Limited Edition Drinks</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Peppermint Mocha</h3>
+                            <span class="hot-tag">BESTSELLER</span>
+                        </div>
+                        <p class="item-desc">Belgian dark cocoa, espresso, peppermint syrup & crushed candy cane</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱150</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱165</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱180</strong></div>
+                    </div>
+                </div>
 
-        <h2>☕ Espresso & Coffee Classics (Hot or Iced)</h2>
-        <table>
-            <tr>
-                <th>Drink</th>
-                <th class="size-col">Tall<br><small>(12oz)</small></th>
-                <th class="size-col">Grande<br><small>(16oz)</small></th>
-                <th class="size-col">Venti<br><small>(20oz)</small></th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Cafe Americano</span>
-                    <span class="item-desc">Bold double-shot Arabica espresso over purified water</span>
-                </td>
-                <td class="size-col">₱100</td>
-                <td class="size-col">₱115</td>
-                <td class="size-col">₱130</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Signature Spanish Latte <span class="hot-tag">TOP PICK</span></span>
-                    <span class="item-desc">Espresso blended with sweetened condensed & fresh creamy milk</span>
-                </td>
-                <td class="size-col">₱130</td>
-                <td class="size-col">₱145</td>
-                <td class="size-col">₱160</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Salted Caramel Macchiato</span>
-                    <span class="item-desc">Vanilla-infused milk marked with espresso & sea-salt caramel drizzle</span>
-                </td>
-                <td class="size-col">₱140</td>
-                <td class="size-col">₱155</td>
-                <td class="size-col">₱170</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">White Chocolate Mocha</span>
-                    <span class="item-desc">Sweet white cocoa melted into rich espresso & steamed milk</span>
-                </td>
-                <td class="size-col">₱140</td>
-                <td class="size-col">₱155</td>
-                <td class="size-col">₱170</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Biscoff Cookie Latte</span>
-                    <span class="item-desc">Creamy latte infused with caramelized Biscoff spread & cookie crumbs</span>
-                </td>
-                <td class="size-col">₱155</td>
-                <td class="size-col">₱170</td>
-                <td class="size-col">₱185</td>
-            </tr>
-        </table>
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Gingerbread Spiced Latte</h3>
+                        </div>
+                        <p class="item-desc">Velvety milk with espresso, cinnamon, nutmeg & brown sugar glaze</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱145</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱160</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱175</strong></div>
+                    </div>
+                </div>
 
-        <h2>🍵 Non-Coffee & Fruit Refreshers</h2>
-        <table>
-            <tr>
-                <th>Drink</th>
-                <th class="size-col">Tall<br><small>(12oz)</small></th>
-                <th class="size-col">Grande<br><small>(16oz)</small></th>
-                <th class="size-col">Venti<br><small>(20oz)</small></th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Uji Matcha Cream Cloud <span class="hot-tag">POPULAR</span></span>
-                    <span class="item-desc">Ceremonial-grade Japanese matcha topped with sweet vanilla cold foam</span>
-                </td>
-                <td class="size-col">₱145</td>
-                <td class="size-col">₱160</td>
-                <td class="size-col">₱175</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Strawberry Matcha Latte</span>
-                    <span class="item-desc">Layered homemade strawberry compote, fresh milk & earthy matcha</span>
-                </td>
-                <td class="size-col">₱155</td>
-                <td class="size-col">₱170</td>
-                <td class="size-col">₱185</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Strawberry Hibiscus Fizz</span>
-                    <span class="item-desc">Sparkling floral hibiscus iced tea with real strawberry chunks</span>
-                </td>
-                <td class="size-col">₱120</td>
-                <td class="size-col">₱135</td>
-                <td class="size-col">₱150</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="item-name">Lychee Rose Cooler</span>
-                    <span class="item-desc">Refreshing sweet lychee refresher with a hint of rosewater & basil seeds</span>
-                </td>
-                <td class="size-col">₱120</td>
-                <td class="size-col">₱135</td>
-                <td class="size-col">₱150</td>
-            </tr>
-        </table>
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Toasted Marshmallow Cocoa</h3>
+                        </div>
+                        <p class="item-desc">Rich Cebuano tablea hot chocolate topped with torched fluff</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱140</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱155</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱170</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <h2>🥐 Fresh Pastries & All-Day Snacks</h2>
-        <table>
-            <tr>
-                <th>Item</th>
-                <th>Description</th>
-                <th class="size-col">Price</th>
-            </tr>
-            <tr>
-                <td><span class="item-name">Classic Butter Croissant</span></td>
-                <td>Flaky, golden-baked French pastry served warm</td>
-                <td class="size-col">₱95</td>
-            </tr>
-            <tr>
-                <td><span class="item-name">Pain au Chocolat</span></td>
-                <td>Crispy laminated pastry filled with dark chocolate batons</td>
-                <td class="size-col">₱115</td>
-            </tr>
-            <tr>
-                <td><span class="item-name">Cebuano Queso Ensaymada</span></td>
-                                <td>Soft brioche topped with whipped butter, sugar & aged cheddar</td>
-                <td class="size-col">₱85</td>
-            </tr>
-            <tr>
-                <td><span class="item-name">Bibingka Burnt Cheesecake <span class="hot-tag">NEW</span></span></td>
-                <td>Caramelized Basque cheesecake with salted egg & toasted coconut</td>
-                <td class="size-col">₱155</td>
-            </tr>
-            <tr>
-                <td><span class="item-name">Truffle Cream Pasta</span></td>
-                <td>Al dente fettuccine tossed in creamy mushroom truffle sauce with garlic bread</td>
-                <td class="size-col">₱210</td>
-            </tr>
-        </table>
+        <section class="menu-section" data-category="coffee">
+            <h2>☕ Espresso & Coffee Classics (Hot or Iced)</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Cafe Americano</h3>
+                        </div>
+                        <p class="item-desc">Bold double-shot Arabica espresso over purified water</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱100</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱115</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱130</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Signature Spanish Latte</h3>
+                            <span class="hot-tag">TOP PICK</span>
+                        </div>
+                        <p class="item-desc">Espresso blended with sweetened condensed & fresh creamy milk</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱130</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱145</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱160</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Salted Caramel Macchiato</h3>
+                        </div>
+                        <p class="item-desc">Vanilla-infused milk marked with espresso & sea-salt caramel drizzle</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱140</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱155</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱170</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">White Chocolate Mocha</h3>
+                        </div>
+                        <p class="item-desc">Sweet white cocoa melted into rich espresso & steamed milk</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱140</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱155</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱170</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Biscoff Cookie Latte</h3>
+                        </div>
+                        <p class="item-desc">Creamy latte infused with caramelized Biscoff spread & cookie crumbs</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱155</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱170</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱185</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu-section" data-category="non-coffee">
+            <h2>🍵 Non-Coffee & Fruit Refreshers</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Uji Matcha Cream Cloud</h3>
+                            <span class="hot-tag">POPULAR</span>
+                        </div>
+                        <p class="item-desc">Ceremonial-grade Japanese matcha topped with sweet vanilla cold foam</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱145</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱160</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱175</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Strawberry Matcha Latte</h3>
+                        </div>
+                        <p class="item-desc">Layered homemade strawberry compote, fresh milk & earthy matcha</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱155</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱170</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱185</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Strawberry Hibiscus Fizz</h3>
+                        </div>
+                        <p class="item-desc">Sparkling floral hibiscus iced tea with real strawberry chunks</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱120</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱135</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱150</strong></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Lychee Rose Cooler</h3>
+                        </div>
+                        <p class="item-desc">Refreshing sweet lychee refresher with a hint of rosewater & basil seeds</p>
+                    </div>
+                    <div class="size-pills">
+                        <div class="size-pill"><small>Tall 12oz</small><strong>₱120</strong></div>
+                        <div class="size-pill"><small>Grande 16oz</small><strong>₱135</strong></div>
+                        <div class="size-pill"><small>Venti 20oz</small><strong>₱150</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu-section" data-category="food">
+            <h2>🥐 Fresh Pastries & All-Day Snacks</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Classic Butter Croissant</h3>
+                        </div>
+                        <p class="item-desc">Flaky, golden-baked French pastry served warm</p>
+                    </div>
+                    <div class="single-price-bar">
+                        <span>Freshly Baked</span>
+                        <strong>₱95</strong>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Pain au Chocolat</h3>
+                        </div>
+                        <p class="item-desc">Crispy laminated pastry filled with dark chocolate batons</p>
+                    </div>
+                    <div class="single-price-bar">
+                        <span>Freshly Baked</span>
+                        <strong>₱115</strong>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Cebuano Queso Ensaymada</h3>
+                        </div>
+                        <p class="item-desc">Soft brioche topped with whipped butter, sugar & aged cheddar</p>
+                    </div>
+                    <div class="single-price-bar">
+                        <span>Local Favorite</span>
+                        <strong>₱85</strong>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Bibingka Burnt Cheesecake</h3>
+                            <span class="hot-tag">NEW</span>
+                        </div>
+                        <p class="item-desc">Caramelized Basque cheesecake with salted egg & toasted coconut</p>
+                    </div>
+                    <div class="single-price-bar">
+                        <span>Per Slice</span>
+                        <strong>₱155</strong>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div>
+                        <div class="menu-card-header">
+                            <h3 class="item-name">Truffle Cream Pasta</h3>
+                        </div>
+                        <p class="item-desc">Al dente fettuccine tossed in creamy mushroom truffle sauce with garlic bread</p>
+                    </div>
+                    <div class="single-price-bar">
+                        <span>Full Plate</span>
+                        <strong>₱210</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <footer>
