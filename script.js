@@ -34,63 +34,17 @@ function filterMenu(category, clickedBtn) {
     });
 }
 
-// 3. FESTIVE PLACEHOLDER ARTWORK GENERATOR
-function createPlaceholderDataUri(emoji, bg1, bg2, accent) {
-    const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160">
-        <defs>
-            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="${bg1}"/>
-                <stop offset="100%" stop-color="${bg2}"/>
-            </linearGradient>
-        </defs>
-        <rect width="240" height="160" rx="16" fill="url(#g)"/>
-        <circle cx="195" cy="34" r="10" fill="${accent}" opacity="0.35"/>
-        <circle cx="42" cy="128" r="14" fill="${accent}" opacity="0.25"/>
-        <text x="120" y="96" font-size="56" text-anchor="middle" dominant-baseline="middle">${emoji}</text>
-    </svg>`;
-    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg.trim());
-}
+// 3. LOCAL IMAGES/ FALLBACK (prevents broken image icons if a file isn't added yet)
+const FALLBACK_LOCAL_IMAGE = "images/spanish-latte.jpg";
 
-function hydratePlaceholders() {
-    document.querySelectorAll("[data-placeholder]").forEach(img => {
-        const type = img.dataset.placeholder;
-        const map = {
-            hero: ["🎄☕", "#1b4332", "#7f1d1d", "#ffd166"],
-            peppermint: ["🍬🍫", "#7f1d1d", "#1b4332", "#ffccd5"],
-            gingerbread: ["🍪✨", "#7c2d12", "#451a03", "#fbbf24"],
-            cocoa: ["🔥🍫", "#431407", "#991b1b", "#fde68a"],
-            eggnog: ["❄️🥛", "#1e3a5f", "#1b4332", "#fef08a"],
-            coffee: ["☕🤎", "#3f2314", "#1b4332", "#d4a373"],
-            spanish: ["🥛☕", "#5c3a21", "#2d6a4f", "#ffd166"],
-            caramel: ["🍮✨", "#78350f", "#3f2314", "#fcd34d"],
-            whitechoco: ["🤍☕", "#4a5568", "#1b4332", "#ffffff"],
-            mocha: ["🍫☕", "#3b1d14", "#1b4332", "#f87171"],
-            matcha: ["🍵☁️", "#1b4332", "#0f291e", "#a7f3d0"],
-            strawberry: ["🍓🍵", "#881337", "#1b4332", "#fda4af"],
-            hibiscus: ["🌺🧊", "#9f1239", "#4c0519", "#fecdd3"],
-            lychee: ["🌸🧊", "#0f766e", "#134e4a", "#99f6e4"],
-            croissant: ["🥐🧈", "#92400e", "#451a03", "#fde68a"],
-            pain: ["🥐🍫", "#5c2b16", "#271108", "#fbbf24"],
-            ensaymada: ["🧀👑", "#b45309", "#1b4332", "#fef08a"],
-            cheesecake: ["🍰🥥", "#7f1d1d", "#451a03", "#fde047"],
-            pasta: ["🍝🍄", "#3f3f46", "#18181b", "#e4e4e7"],
-            cookie: ["🎄🍪", "#14532d", "#7f1d1d", "#fde047"]
-        };
-
-        if (type === "biscoff") {
-            const bisSvg = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160">
-                <defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c2d12"/><stop offset="100%" stop-color="#2d1609"/></linearGradient></defs>
-                <rect width="240" height="160" rx="16" fill="url(#b)"/>
-                <text x="120" y="92" font-size="38" font-weight="bold" fill="#fde68a" text-anchor="middle" dominant-baseline="middle">🍪 LATTE</text>
-            </svg>`;
-            img.src = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(bisSvg.trim());
-            return;
-        }
-
-        const [emoji, bg1, bg2, accent] = map[type] || ["🎄☕", "#1b4332", "#7f1d1d", "#ffd166"];
-        img.src = createPlaceholderDataUri(emoji, bg1, bg2, accent);
+function attachLocalImageFallbacks() {
+    document.querySelectorAll("img").forEach(img => {
+        img.addEventListener("error", () => {
+            if (!img.src.endsWith("/" + FALLBACK_LOCAL_IMAGE) && !img.dataset.fallbackApplied) {
+                img.dataset.fallbackApplied = "true";
+                img.src = FALLBACK_LOCAL_IMAGE;
+            }
+        });
     });
 }
 
@@ -195,15 +149,15 @@ function openItemModal(card) {
         tags: ["🎄 Evélique Special", "✨ Freshly Prepared"]
     };
 
-    document.getElementById("modalImg").src = imgEl ? imgEl.src : "";
-    document.getElementById("modalImg").alt = title;
+    const modalImg = document.getElementById("modalImg");
+    modalImg.src = imgEl ? imgEl.getAttribute("src") : FALLBACK_LOCAL_IMAGE;
+    modalImg.alt = title;
     document.getElementById("modalTitle").textContent = title;
     document.getElementById("modalDesc").textContent = extra.notes;
 
     const badge = document.getElementById("modalTag");
     if (tagEl) {
         badge.textContent = tagEl.textContent;
-        badge.style.display = "inline-block";
     } else {
         badge.textContent = "Evélique Menu";
     }
@@ -264,9 +218,8 @@ window.addEventListener("keydown", e => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-    hydratePlaceholders();
+    attachLocalImageFallbacks();
 
-    // Make every menu card interactive
     document.querySelectorAll(".menu-card").forEach(card => {
         card.setAttribute("role", "button");
         card.setAttribute("tabindex", "0");
