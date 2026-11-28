@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evélique Cafe - Handcrafted Coffee & Pastries</title>
+    <title>Evélique Cafe — Handcrafted Coffee & Pastries</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Scenic Mountain, Sun/Moon & Sleigh Background -->
     <div class="scenic-bg">
         <div class="stars"></div>
         <div class="celestial-orb"></div>
 
-        <!-- Santa's Sleigh Silhouette -->
         <div class="sleigh-container">
             <svg viewBox="0 0 200 70" fill="currentColor">
                 <circle cx="165" cy="35" r="5"/>
@@ -28,17 +26,13 @@
             </svg>
         </div>
 
-        <!-- Winter Mountains -->
         <svg class="mountains-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
             <polygon class="mountain-back" points="0,320 260,90 540,320"/>
             <polygon class="snow-cap" points="260,90 215,130 245,125 260,140 280,122 305,130"/>
-
             <polygon class="mountain-back" points="420,320 760,60 1120,320"/>
             <polygon class="snow-cap" points="760,60 700,112 735,105 760,125 790,104 820,112"/>
-
             <polygon class="mountain-back" points="950,320 1240,100 1440,260 1440,320"/>
             <polygon class="snow-cap" points="1240,100 1195,135 1225,130 1240,145 1265,128 1285,135"/>
-
             <polygon class="mountain-front" points="-50,320 180,150 430,320"/>
             <polygon class="mountain-front" points="320,320 620,140 940,320"/>
             <polygon class="mountain-front" points="820,320 1140,155 1490,320"/>
@@ -53,7 +47,7 @@
         <h1>Evélique Cafe</h1>
         <span class="tagline">Artisanal Coffee • Fresh Bakes • Mandaue City</span>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.html" class="active">Home</a>
             <a href="menu.html">Menu (3 Sizes)</a>
             <a href="contact.html">Visit & Contact</a>
         </nav>
@@ -62,66 +56,91 @@
 
     <div class="container">
         <div class="hero">
-            <span class="promo-pill">🔥 LIMITED TIME OFFER</span>
+            <span class="promo-pill">🔥 LIMITED TIME HOLIDAY OFFER</span>
             <h2>Cozy Cups, Mountain Views & Sweet Deals</h2>
-            <p>Crafted daily with 100% locally roasted Arabica beans. Grab our holiday bestsellers at special markdown prices before the promo ends!</p>
+            <p>Crafted daily with 100% locally roasted Arabica beans. Grab our seasonal bestsellers at special markdown prices before the promo ends.</p>
             <a href="menu.html" class="btn">Explore Full 3-Size Menu →</a>
         </div>
 
-        <h2>Featured Holiday Deals (Price Drop!)</h2>
+        <h2>Featured Holiday Deals</h2>
         <div class="card-row">
             <div class="card">
-                <span class="badge">Holiday Bestseller</span>
-                <h3>Peppermint Mocha</h3>
-                <p>Rich Belgian cocoa, espresso, cool peppermint & whipped cream.</p>
-                <div class="price-box">
-                    <span class="old-price">₱195</span>
-                    <span class="new-price">₱165</span>
-                    <span class="save-tag">SAVE ₱30</span>
+                <div>
+                    <span class="badge">Holiday Bestseller</span>
+                    <h3>Peppermint Mocha</h3>
+                    <p>Rich Belgian cocoa, espresso, cool peppermint & whipped cream.</p>
                 </div>
-                <a href="menu.html" class="btn">Order Now</a>
+                <div>
+                    <div class="price-box">
+                        <span class="old-price">₱195</span>
+                        <span class="new-price">₱165</span>
+                        <span class="save-tag">SAVE ₱30</span>
+                    </div>
+                    <a href="menu.html" class="btn btn-outline">View on Menu</a>
+                </div>
             </div>
 
             <div class="card">
-                <span class="badge">#1 Customer Pick</span>
-                <h3>Iced Spanish Latte</h3>
-                <p>Double-shot espresso swirled with silky sweetened condensed milk.</p>
-                <div class="price-box">
-                    <span class="old-price">₱170</span>
-                    <span class="new-price">₱145</span>
-                    <span class="save-tag">SAVE ₱25</span>
+                <div>
+                    <span class="badge">#1 Customer Pick</span>
+                    <h3>Iced Spanish Latte</h3>
+                    <p>Double-shot espresso swirled with silky sweetened condensed milk.</p>
                 </div>
-                <a href="menu.html" class="btn">Order Now</a>
+                <div>
+                    <div class="price-box">
+                        <span class="old-price">₱170</span>
+                        <span class="new-price">₱145</span>
+                        <span class="save-tag">SAVE ₱25</span>
+                    </div>
+                    <a href="menu.html" class="btn btn-outline">View on Menu</a>
+                </div>
             </div>
 
             <div class="card">
-                <span class="badge">Limited Batch</span>
-                <h3>Bibingka Cheesecake</h3>
-                <p>Creamy burnt cheesecake topped with salted egg & toasted coconut.</p>
-                <div class="price-box">
-                    <span class="old-price">₱185</span>
-                    <span class="new-price">₱155</span>
-                    <span class="save-tag">SAVE ₱30</span>
+                <div>
+                    <span class="badge">Limited Batch</span>
+                    <h3>Bibingka Cheesecake</h3>
+                    <p>Creamy burnt cheesecake topped with salted egg & toasted coconut.</p>
                 </div>
-                <a href="menu.html" class="btn">Order Now</a>
+                <div>
+                    <div class="price-box">
+                        <span class="old-price">₱185</span>
+                        <span class="new-price">₱155</span>
+                        <span class="save-tag">SAVE ₱30</span>
+                    </div>
+                    <a href="menu.html" class="btn btn-outline">View on Menu</a>
+                </div>
             </div>
         </div>
 
-        <!-- Marketing Bundle Deal -->
         <div class="bundle-box">
             <div>
                 <h3>🎁 Barkada & Study Pair Bundle</h3>
                 <p style="margin:0;">Any <strong>2 Grande Drinks</strong> + <strong>2 Classic Butter Croissants</strong></p>
-                <p style="margin:5px 0 0 0; font-size: 14px;">
-                    Regular: <span style="text-decoration: line-through; opacity: 0.8;">₱490</span> → 
-                    <strong style="font-size: 18px; color: #ffd166;">Only ₱399!</strong> (Save ₱91)
+                <p style="margin:6px 0 0 0; font-size: 14px;">
+                    Regular: <span style="text-decoration: line-through; opacity: 0.75;">₱490</span> → 
+                    <strong style="font-size: 19px; color: #ffd166;">Only ₱399!</strong> (Save ₱91)
                 </p>
             </div>
             <a href="contact.html" class="btn">Reserve a Table</a>
         </div>
 
         <h2>Why Evélique Cafe?</h2>
-        <p>Located along A.S. Fortuna St. in Mandaue City, Evélique Cafe was built for late-night study sessions, quiet coffee dates, and sweet cravings. With free high-speed Wi-Fi, plenty of power outlets, and freshly baked pastries every morning, your favorite seat is always waiting.</p>
+        <p style="color: var(--text-muted); margin-top: 0;">Located along A.S. Fortuna St. in Mandaue City, Evélique Cafe was built for late-night study sessions, quiet coffee dates, and sweet cravings.</p>
+        <div class="perks-grid">
+            <div class="perk-item">
+                <strong>⚡ Fast Fiber Wi-Fi</strong>
+                Reliable connection built for group study & remote work.
+            </div>
+            <div class="perk-item">
+                <strong>🔌 Table Power Outlets</strong>
+                Easy-access charging ports at every booth and study counter.
+            </div>
+            <div class="perk-item">
+                <strong>🥐 Baked Every Morning</strong>
+                Warm laminated croissants and Cebuano-inspired pastries daily.
+            </div>
+        </div>
     </div>
 
     <footer>
