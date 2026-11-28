@@ -34,6 +34,7 @@ A cozy, Christmas-themed digital cafe menu created as a school project by **John
 **John Ludovic Cabahug**  
 Grade 9 – Citrine  
 
+#### Project Started On The 25th of November 2026
 ---
 
 > **Disclaimer:** *This project was created strictly for educational and school purposes only.*
