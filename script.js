@@ -13,6 +13,20 @@ function toggleTheme() {
     }
 }
 
+// 2. MENU CATEGORY FILTER
+function filterMenu(category, clickedBtn) {
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+    if (clickedBtn) clickedBtn.classList.add("active");
+
+    document.querySelectorAll(".menu-section").forEach(section => {
+        if (category === "all" || section.dataset.category === category) {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("themeBtn");
     if (localStorage.getItem("evelique-theme") === "dark") {
@@ -20,7 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (btn) btn.textContent = "☀️ Light Mode";
     }
 
-    // 2. DISCORD WEBHOOK CONTACT FORM
+    // 3. DISCORD WEBHOOK CONTACT FORM
     const form = document.getElementById("contactForm");
     if (!form) return;
 
