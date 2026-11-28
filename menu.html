@@ -375,6 +375,24 @@
         </section>
     </div>
 
+    <!-- ITEM DETAILS MODAL -->
+    <div class="modal-backdrop" id="itemModal" onclick="closeItemModal(event)">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" onclick="closeItemModal()" aria-label="Close details">&times;</button>
+            <img class="modal-hero-img" id="modalImg" src="" alt="">
+            <span class="badge" id="modalTag">Cafe Favorite</span>
+            <h3 class="modal-title" id="modalTitle">Item Name</h3>
+            <p class="modal-desc" id="modalDesc">Full item description goes here.</p>
+
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-prices" id="modalPrices"></div>
+
+            <a href="contact.html" class="btn" id="modalOrderBtn" style="width: 100%; margin-top: 0;">
+                Pre-Order / Reserve with This Item →
+            </a>
+        </div>
+    </div>
+    
     <footer>
         <p>&copy; 2026 Evélique Cafe | A.S. Fortuna St., Mandaue City, Cebu</p>
     </footer>
