@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-    --sky-top: #ffd6ba;
-    --sky-bottom: #fff6ee;
+    --sky-top: #fff5eb;
+    --sky-bottom: #ffe8d6;
     --sun-moon-color: #ffb703;
-    --sun-moon-glow: rgba(255, 183, 3, 0.55);
-    --mountain-back: #749c8b;
-    --mountain-front: #2d6a4f;
-    --snow-cap: #ffffff;
+    --sun-moon-glow: rgba(255, 183, 3, 0.45);
     --sleigh-color: #b91c1c;
     --star-opacity: 0;
-    --flake-opacity: 0.72;
+    --flake-opacity: 0.65;
+
+    /* Candy cane diagonal pattern (Light Mode) */
+    --stripe-red: rgba(185, 28, 28, 0.13);
+    --stripe-cream: rgba(255, 255, 255, 0.62);
+    --stripe-fade-top: rgba(255, 245, 235, 0.15);
+    --stripe-fade-bottom: rgba(255, 232, 214, 0.72);
 
     --card-bg: rgba(255, 255, 255, 0.88);
     --card-inner: rgba(255, 252, 247, 0.96);
@@ -27,16 +30,19 @@
 }
 
 body.dark-mode {
-    --sky-top: #080d22;
-    --sky-bottom: #18233f;
+    --sky-top: #090e24;
+    --sky-bottom: #141e38;
     --sun-moon-color: #fff3b0;
-    --sun-moon-glow: rgba(255, 243, 176, 0.45);
-    --mountain-back: #1b2845;
-    --mountain-front: #0d1629;
-    --snow-cap: #cbd5e1;
+    --sun-moon-glow: rgba(255, 243, 176, 0.35);
     --sleigh-color: #ffd166;
-    --star-opacity: 1;
-    --flake-opacity: 0.9;
+    --star-opacity: 0.95;
+    --flake-opacity: 0.85;
+
+    /* Candy cane diagonal pattern (Dark Mode: muted crimson & soft ivory/mint) */
+    --stripe-red: rgba(239, 71, 111, 0.12);
+    --stripe-cream: rgba(248, 250, 252, 0.055);
+    --stripe-fade-top: rgba(9, 14, 36, 0.2);
+    --stripe-fade-bottom: rgba(20, 30, 56, 0.78);
 
     --card-bg: rgba(15, 23, 42, 0.86);
     --card-inner: rgba(25, 36, 62, 0.92);
@@ -52,9 +58,42 @@ body.dark-mode {
     --shadow-hover: 0 16px 32px rgba(0, 0, 0, 0.62);
 }
 
+/* Smooth theme cross-fade only when toggling theme */
+body.theme-transitioning,
+body.theme-transitioning .scenic-bg,
+body.theme-transitioning .candy-stripes,
+body.theme-transitioning .celestial-orb,
+body.theme-transitioning .sleigh-container,
+body.theme-transitioning .stars,
+body.theme-transitioning .snow-layer,
+body.theme-transitioning header,
+body.theme-transitioning .container,
+body.theme-transitioning .card,
+body.theme-transitioning .menu-card,
+body.theme-transitioning .info-panel,
+body.theme-transitioning .form-panel,
+body.theme-transitioning .modal-card,
+body.theme-transitioning footer,
+body.theme-transitioning h1,
+body.theme-transitioning h2,
+body.theme-transitioning h3,
+body.theme-transitioning p,
+body.theme-transitioning a,
+body.theme-transitioning button,
+body.theme-transitioning input,
+body.theme-transitioning textarea {
+    transition:
+        background 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.7s ease,
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
 * {
     box-sizing: border-box;
-    transition: background-color 0.35s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
@@ -69,7 +108,7 @@ body {
     flex-direction: column;
 }
 
-/* SCENIC CHRISTMAS BACKGROUND */
+/* SCENIC BACKGROUND WITH INFINITE CANDY-CANE DIAGONAL LOOP */
 .scenic-bg {
     position: fixed;
     inset: 0;
@@ -78,12 +117,53 @@ body {
     overflow: hidden;
 }
 
+.candy-stripes {
+    position: absolute;
+    inset: -120px;
+    width: calc(100% + 240px);
+    height: calc(100% + 240px);
+    /* 45deg runs top-left to bottom-right (down-rightward) */
+    background-image: repeating-linear-gradient(
+        45deg,
+        var(--stripe-red) 0px,
+        var(--stripe-red) 22px,
+        var(--stripe-cream) 22px,
+        var(--stripe-cream) 44px,
+        transparent 44px,
+        transparent 68px
+    );
+    background-size: 96.166px 96.166px; /* exact integer tile multiple of 68px * sqrt(2) for seamless loop */
+    will-change: background-position;
+    animation: candyLoopDownRight 5.5s linear infinite;
+}
+
+.candy-stripes::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        var(--stripe-fade-top) 0%,
+        transparent 38%,
+        var(--stripe-fade-bottom) 100%
+    );
+    pointer-events: none;
+}
+
+@keyframes candyLoopDownRight {
+    0% {
+        background-position: 0px 0px;
+    }
+    100% {
+        background-position: 96.166px 96.166px;
+    }
+}
+
 .stars {
     position: absolute;
     width: 100%;
-    height: 62%;
+    height: 65%;
     opacity: var(--star-opacity);
-    transition: opacity 0.7s ease;
     background-image:
         radial-gradient(2px 2px at 12% 18%, #fff, transparent),
         radial-gradient(2px 2px at 32% 10%, #fff, transparent),
@@ -97,7 +177,7 @@ body {
 }
 
 @keyframes twinkle {
-    0% { opacity: calc(var(--star-opacity) * 0.45); }
+    0% { opacity: calc(var(--star-opacity) * 0.5); }
     100% { opacity: var(--star-opacity); }
 }
 
@@ -136,11 +216,11 @@ body {
     border-radius: 50%;
     background-color: var(--sun-moon-color);
     box-shadow: 0 0 55px 20px var(--sun-moon-glow);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.5s ease, box-shadow 0.5s ease;
+    transform: translateY(0) scale(1);
 }
 
 body.dark-mode .celestial-orb {
-    transform: translateY(-14px) scale(0.92);
+    transform: translateY(-12px) scale(0.92);
 }
 
 .sleigh-container {
@@ -160,19 +240,6 @@ body.dark-mode .celestial-orb {
     75% { transform: translateX(100vw) translateY(-10px); }
     100% { transform: translateX(125vw) translateY(0px); }
 }
-
-.mountains-svg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 45vh;
-    min-height: 230px;
-}
-
-.mountain-back { fill: var(--mountain-back); transition: fill 0.6s ease; }
-.mountain-front { fill: var(--mountain-front); transition: fill 0.6s ease; }
-.snow-cap { fill: var(--snow-cap); transition: fill 0.6s ease; }
 
 /* TOP BANNER & FESTIVE HEADER */
 .holiday-banner {
@@ -208,7 +275,6 @@ header {
     box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
 }
 
-/* Festive fairy lights / garland strip under header */
 header::after {
     content: "✦ 🎄 ✦ ✨ ✦ 🎁 ✦ ✨ ✦ 🎄 ✦ ✨ ✦ 🎁 ✦";
     position: absolute;
@@ -258,6 +324,7 @@ nav a {
     font-size: 13.5px;
     padding: 6px 16px;
     border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 nav a:hover {
@@ -343,6 +410,7 @@ h2:first-child { margin-top: 0; }
     font-size: 13.5px;
     font-weight: 700;
     box-shadow: 0 6px 16px rgba(185, 28, 28, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
@@ -364,7 +432,7 @@ h2:first-child { margin-top: 0; }
     color: #ffffff;
 }
 
-/* HERO SECTION WITH ARTWORK */
+/* HERO SECTION */
 .hero {
     background: linear-gradient(135deg, var(--card-inner), rgba(185, 28, 28, 0.08));
     border: 1.5px solid rgba(224, 169, 88, 0.65);
@@ -529,7 +597,7 @@ h2:first-child { margin-top: 0; }
     margin-bottom: 2px;
 }
 
-/* COMPACT MENU LAYOUT (LESS SCROLLING) */
+/* COMPACT MENU LAYOUT */
 .menu-toolbar {
     display: flex;
     justify-content: space-between;
@@ -598,12 +666,32 @@ h2:first-child { margin-top: 0; }
     display: flex;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
+    position: relative;
 }
 
 .menu-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
     border-color: var(--accent-gold);
+}
+
+.menu-card::after {
+    content: "Details →";
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.menu-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .menu-img {
@@ -688,106 +776,7 @@ h2:first-child { margin-top: 0; }
     display: inline-block;
 }
 
-/* CONTACT 2-COLUMN */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.25fr;
-    gap: 24px;
-    align-items: start;
-}
-
-.info-panel, .form-panel {
-    background: var(--card-inner);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 22px;
-}
-
-.info-list {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 18px 0;
-}
-
-.info-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 14px;
-}
-
-.info-list li:last-child { border-bottom: none; }
-
-form label {
-    display: block;
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent-primary);
-}
-
-form label:first-child { margin-top: 0; }
-
-form input, form textarea {
-    width: 100%;
-    padding: 10px 13px;
-    margin-top: 5px;
-    border: 1px solid var(--border-color);
-    background-color: var(--card-bg);
-    color: var(--text-main);
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 14px;
-}
-
-form input:focus, form textarea:focus {
-    outline: none;
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 0 3px rgba(224, 169, 88, 0.25);
-}
-
-#status-msg {
-    margin-top: 14px;
-    font-weight: 600;
-    font-size: 13.5px;
-    padding: 11px 13px;
-    border-radius: 10px;
-    display: none;
-}
-
-footer {
-    background-color: var(--header-bg);
-    color: #f8f9fa;
-    text-align: center;
-    padding: 18px;
-    margin-top: auto;
-    font-size: 13px;
-    border-top: 3px solid var(--accent-gold);
-}
-
-/* CLICKABLE MENU CARDS & ITEM DETAILS MODAL */
-.menu-card {
-    cursor: pointer;
-    position: relative;
-}
-
-.menu-card::after {
-    content: "Details →";
-    position: absolute;
-    bottom: 10px;
-    right: 12px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent-gold);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.menu-card:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-}
-
+/* MODAL */
 .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -925,6 +914,82 @@ footer {
     display: block;
     font-size: 16px;
     color: var(--accent-red);
+}
+
+/* CONTACT 2-COLUMN */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.info-panel, .form-panel {
+    background: var(--card-inner);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 18px 0;
+}
+
+.info-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+}
+
+.info-list li:last-child { border-bottom: none; }
+
+form label {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+form label:first-child { margin-top: 0; }
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px 13px;
+    margin-top: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+form input:focus, form textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 3px rgba(224, 169, 88, 0.25);
+}
+
+#status-msg {
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    display: none;
+}
+
+footer {
+    background-color: var(--header-bg);
+    color: #f8f9fa;
+    text-align: center;
+    padding: 18px;
+    margin-top: auto;
+    font-size: 13px;
+    border-top: 3px solid var(--accent-gold);
 }
 
 @media (max-width: 820px) {
