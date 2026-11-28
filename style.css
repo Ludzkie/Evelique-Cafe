@@ -119,22 +119,21 @@ body {
 
 .candy-stripes {
     position: absolute;
-    inset: -120px;
-    width: calc(100% + 240px);
-    height: calc(100% + 240px);
-    /* 45deg runs top-left to bottom-right (down-rightward) */
+    inset: -240px;
+    width: calc(100% + 480px);
+    height: calc(100% + 480px);
     background-image: repeating-linear-gradient(
         45deg,
         var(--stripe-red) 0px,
-        var(--stripe-red) 22px,
-        var(--stripe-cream) 22px,
-        var(--stripe-cream) 44px,
-        transparent 44px,
-        transparent 68px
+        var(--stripe-red) 24px,
+        var(--stripe-cream) 24px,
+        var(--stripe-cream) 48px,
+        transparent 48px,
+        transparent 76px
     );
-    background-size: 96.166px 96.166px; /* exact integer tile multiple of 68px * sqrt(2) for seamless loop */
-    will-change: background-position;
-    animation: candyLoopDownRight 5.5s linear infinite;
+    background-size: 107.48px 107.48px;
+    will-change: transform;
+    animation: candyLoopDownRight 6s linear infinite;
 }
 
 .candy-stripes::after {
@@ -152,10 +151,10 @@ body {
 
 @keyframes candyLoopDownRight {
     0% {
-        background-position: 0px 0px;
+        transform: translate3d(0px, 0px, 0);
     }
     100% {
-        background-position: 96.166px 96.166px;
+        transform: translate3d(107.48px, 107.48px, 0);
     }
 }
 
