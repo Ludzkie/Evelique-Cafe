@@ -1,4 +1,4 @@
-// 1. DARK / LIGHT THEME TOGGLE
+// 1. DARK / LIGHT THEME TOGGLE (SMOOTH TRANSITION)
 let themeTransitionTimer = null;
 
 function toggleTheme() {
@@ -43,7 +43,7 @@ function filterMenu(category, clickedBtn) {
     });
 }
 
-// 3. LOCAL IMAGES/ FALLBACK (prevents broken image icons if a file isn't added yet)
+// 3. LOCAL IMAGES/ FALLBACK
 const FALLBACK_LOCAL_IMAGE = "images/spanish-latte.jpg";
 
 function attachLocalImageFallbacks() {
@@ -57,7 +57,165 @@ function attachLocalImageFallbacks() {
     });
 }
 
-// 4. EXTRA DETAILS LOOKUP FOR EACH MENU ITEM
+// 4. CART / ORDER TRAY LOGIC (PERSISTS ACROSS PAGES)
+const CART_KEY = "evelique-cart";
+
+function getCart() {
+    try {
+        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    renderCartUI();
+}
+
+function addToCart(name, size, price) {
+    const cart = getCart();
+    const existing = cart.find(item => item.name === name && item.size === size);
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ name, size, price: Number(price), qty: 1 });
+    }
+    saveCart(cart);
+    showCartToast(`Added ${name} (${size})!`);
+}
+
+function updateCartQty(index, delta) {
+    const cart = getCart();
+    if (!cart[index]) return;
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+    saveCart(cart);
+}
+
+function clearCart() {
+    saveCart([]);
+}
+
+function formatCartForReservation(cart) {
+    if (!cart.length) return "";
+    let total = 0;
+    const lines = cart.map(item => {
+        const sub = item.price * item.qty;
+        total += sub;
+        return `• ${item.qty}x ${item.name} (${item.size}) — ₱${sub}`;
+    });
+    return `🎄 Pre-Order Items:\n${lines.join("\n")}\nEstimated Total: ₱${total}\n\nTable for: \nPreferred Date & Time: `;
+}
+
+function showCartToast(text) {
+    const toast = document.getElementById("cartToast");
+    if (!toast) return;
+    toast.textContent = `🛒 ${text}`;
+    toast.classList.add("show");
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+function openCartDrawer() {
+    document.getElementById("cartDrawerBackdrop")?.classList.add("open");
+}
+
+function closeCartDrawer(event) {
+    const backdrop = document.getElementById("cartDrawerBackdrop");
+    if (!backdrop) return;
+    if (!event || event.target === backdrop) {
+        backdrop.classList.remove("open");
+    }
+}
+
+function injectCartWidgets() {
+    if (document.getElementById("cartBarBtn")) return;
+
+    const html = `
+        <div class="cart-toast" id="cartToast">🛒 Added to order!</div>
+
+        <button type="button" class="cart-bar" id="cartBarBtn" onclick="openCartDrawer()">
+            <span>🛒 Order Tray</span>
+            <span class="cart-badge" id="cartCountBadge">0</span>
+            <span id="cartBarTotal">₱0</span>
+        </button>
+
+        <div class="cart-drawer-backdrop" id="cartDrawerBackdrop" onclick="closeCartDrawer(event)">
+            <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Your Cafe Order">
+                <div>
+                    <div class="cart-drawer-header">
+                        <h3>🎄 Your Order Tray</h3>
+                        <button type="button" class="modal-close" style="position:static;" onclick="closeCartDrawer()">&times;</button>
+                    </div>
+                    <p style="font-size:12.5px; color:var(--text-muted); margin:8px 0 0 0;">
+                        Items added here automatically fill your reservation form.
+                    </p>
+                </div>
+
+                <div class="cart-items-list" id="cartItemsList"></div>
+
+                <div class="cart-footer">
+                    <div class="cart-total-row">
+                        <span>Estimated Total</span>
+                        <span style="color:var(--accent-red);" id="cartDrawerTotal">₱0</span>
+                    </div>
+                    <a href="contact.html?fromCart=1" class="btn" id="checkoutCartBtn" style="width:100%; margin-top:0;">
+                        Deliver Order to Reservation →
+                    </a>
+                    <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="clearCart()">
+                        Clear Tray
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", html);
+    renderCartUI();
+}
+
+function renderCartUI() {
+    const cart = getCart();
+    const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+    const totalPrice = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+    const badge = document.getElementById("cartCountBadge");
+    const barTotal = document.getElementById("cartBarTotal");
+    const drawerTotal = document.getElementById("cartDrawerTotal");
+    const listEl = document.getElementById("cartItemsList");
+
+    if (badge) badge.textContent = totalQty;
+    if (barTotal) barTotal.textContent = `₱${totalPrice}`;
+    if (drawerTotal) drawerTotal.textContent = `₱${totalPrice}`;
+
+    if (!listEl) return;
+
+    if (cart.length === 0) {
+        listEl.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:40px;">Your order tray is empty.<br>Click any drink or pastry on the Menu to add it!</p>`;
+        return;
+    }
+
+    listEl.innerHTML = cart
+        .map(
+            (item, idx) => `
+            <div class="cart-row">
+                <div class="cart-row-info">
+                    <strong>${item.name}</strong>
+                    <small>${item.size} • ₱${item.price} each</small>
+                </div>
+                <div class="cart-qty-controls">
+                    <button type="button" class="qty-btn" onclick="updateCartQty(${idx}, -1)">−</button>
+                    <span style="font-weight:700; min-width:18px; text-align:center;">${item.qty}</span>
+                    <button type="button" class="qty-btn" onclick="updateCartQty(${idx}, 1)">+</button>
+                </div>
+            </div>`
+        )
+        .join("");
+}
+
+// 5. EXTRA DETAILS LOOKUP FOR EACH MENU ITEM
 const ITEM_DETAILS = {
     "Peppermint Mocha": {
         notes: "Double-shot Bukidnon Arabica pulled over 70% dark Belgian chocolate, cool peppermint extract, steamed whole milk, whipped cream & crushed candy cane.",
@@ -141,7 +299,9 @@ const ITEM_DETAILS = {
     }
 };
 
-// 5. OPEN / CLOSE ITEM DETAILS MODAL
+// 6. OPEN / CLOSE ITEM DETAILS MODAL (WITH ADD TO CART)
+let selectedModalItem = { name: "", size: "", price: 0 };
+
 function openItemModal(card) {
     const modal = document.getElementById("itemModal");
     if (!modal) return;
@@ -165,11 +325,7 @@ function openItemModal(card) {
     document.getElementById("modalDesc").textContent = extra.notes;
 
     const badge = document.getElementById("modalTag");
-    if (tagEl) {
-        badge.textContent = tagEl.textContent;
-    } else {
-        badge.textContent = "Evélique Menu";
-    }
+    badge.textContent = tagEl ? tagEl.textContent : "Evélique Menu";
 
     const metaContainer = document.getElementById("modalMeta");
     metaContainer.innerHTML = extra.tags
@@ -177,38 +333,46 @@ function openItemModal(card) {
         .join("");
 
     const pricesContainer = document.getElementById("modalPrices");
-    const orderBtn = document.getElementById("modalOrderBtn");
-
-    function updateOrderLink(label) {
-        const prefill = encodeURIComponent(`Hi Evélique Cafe! I'd like to reserve/order: 1x ${title} (${label})`);
-        orderBtn.href = `contact.html?order=${prefill}`;
-    }
+    const addCartBtn = document.getElementById("modalAddCartBtn");
 
     if (sizePills.length > 0) {
         pricesContainer.innerHTML = "";
         sizePills.forEach((pill, index) => {
-            const size = pill.querySelector("small")?.textContent || "";
-            const price = pill.querySelector("strong")?.textContent || "";
+            const size = pill.querySelector("small")?.textContent.trim() || "";
+            const priceText = pill.querySelector("strong")?.textContent.trim() || "₱0";
+            const numericPrice = parseInt(priceText.replace(/[^\d]/g, ""), 10) || 0;
+
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "modal-price-option" + (index === 1 ? " selected" : "");
-            btn.innerHTML = `<small>${size}</small><strong>${price}</strong>`;
+            btn.innerHTML = `<small>${size}</small><strong>${priceText}</strong>`;
             btn.onclick = () => {
                 pricesContainer.querySelectorAll(".modal-price-option").forEach(b => b.classList.remove("selected"));
                 btn.classList.add("selected");
-                updateOrderLink(`${size} - ${price}`);
+                selectedModalItem = { name: title, size, price: numericPrice };
             };
             pricesContainer.appendChild(btn);
-            if (index === 1) updateOrderLink(`${size} - ${price}`);
+
+            if (index === 1) {
+                selectedModalItem = { name: title, size, price: numericPrice };
+            }
         });
     } else if (singleChip) {
-        const price = singleChip.textContent.trim();
+        const priceText = singleChip.textContent.trim();
+        const numericPrice = parseInt(priceText.replace(/[^\d]/g, ""), 10) || 0;
         pricesContainer.innerHTML = `
             <button type="button" class="modal-price-option selected">
                 <small>Regular Serving</small>
-                <strong>${price}</strong>
+                <strong>${priceText}</strong>
             </button>`;
-        updateOrderLink(price);
+        selectedModalItem = { name: title, size: "Regular", price: numericPrice };
+    }
+
+    if (addCartBtn) {
+        addCartBtn.onclick = () => {
+            addToCart(selectedModalItem.name, selectedModalItem.size, selectedModalItem.price);
+            closeItemModal();
+        };
     }
 
     modal.classList.add("open");
@@ -223,11 +387,15 @@ function closeItemModal(event) {
 }
 
 window.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeItemModal();
+    if (e.key === "Escape") {
+        closeItemModal();
+        closeCartDrawer();
+    }
 });
 
 window.addEventListener("DOMContentLoaded", () => {
     attachLocalImageFallbacks();
+    injectCartWidgets();
 
     document.querySelectorAll(".menu-card").forEach(card => {
         card.setAttribute("role", "button");
@@ -247,15 +415,14 @@ window.addEventListener("DOMContentLoaded", () => {
         if (btn) btn.textContent = "☀️ Light Mode";
     }
 
-    // 6. AUTO-PREFILL RESERVATION IF COMING FROM MENU MODAL
-    const params = new URLSearchParams(window.location.search);
-    const prefilledOrder = params.get("order");
+    // 7. AUTO-FILL RESERVATION MESSAGE FROM CART ON CONTACT PAGE
     const msgField = document.getElementById("message");
-    if (prefilledOrder && msgField) {
-        msgField.value = prefilledOrder + "\nTable for: \nPreferred Time: ";
+    const cart = getCart();
+    if (msgField && cart.length > 0 && !msgField.value.trim()) {
+        msgField.value = formatCartForReservation(cart);
     }
 
-    // 7. DISCORD WEBHOOK CONTACT FORM
+    // 8. DISCORD WEBHOOK CONTACT FORM
     const form = document.getElementById("contactForm");
     if (!form) return;
 
@@ -302,8 +469,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 statusMsg.style.display = "block";
                 statusMsg.style.backgroundColor = "#d8f3dc";
                 statusMsg.style.color = "#1b4332";
-                statusMsg.textContent = "✅ Thank you! Your message has been sent to Evélique Cafe.";
+                statusMsg.textContent = "✅ Thank you! Your reservation & order have been sent to Evélique Cafe.";
                 form.reset();
+                clearCart();
             } else {
                 throw new Error("Discord returned an error");
             }
